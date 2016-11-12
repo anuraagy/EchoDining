@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "alexa-app": "^2.3.4",
     "coffee-script": "^1.11.1"
   },
   "devDependencies": {
