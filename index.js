@@ -9,8 +9,10 @@ var handlers = {
     var protocol = new Protocol("11-10-2016");
     var speechOutput = "";
     console.log("hello")
-    speechOutput = protocol.getOpenDiningHalls();
-    this.emit(':tell', speechOutput);
+    var that = this;
+    protocol.getOpenDiningHalls(function(speechOutput) {
+      that.emit(':tell', speechOutput);
+    });
   },
 
   "GetDeserts": function() {

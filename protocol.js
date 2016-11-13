@@ -19,14 +19,15 @@ Protocol.prototype.getData = function() {
   })
 }
 
-Protocol.prototype.getOpenDiningHalls = function() {
-    
+Protocol.prototype.getOpenDiningHalls = function(callback) {
+
     var openDiningHalls = [];
     var date = new Date();
     var weekday = new Array(7);
     var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
 
-    currentTime = "19:01:00";
+    currentTime = "12:01:00";
+
     weekday[0]=  "Sunday";
     weekday[1] = "Monday";
     weekday[2] = "Tuesday";
@@ -50,22 +51,22 @@ Protocol.prototype.getOpenDiningHalls = function() {
 	response.on('end', function() {
 	    if(!(body.localeCompare('') == 0)) {
 		var json = JSON.parse(body);
-		
+
 		json["Location"].forEach(function(hall) {
 		    hall["NormalHours"][0]["Days"].forEach(function(eatingTime) {
 			if(weekday[date.getDay()] == eatingTime["Name"]) {
 			    eatingTime["Meals"].forEach(function(time) {
 				if(time["Hours"] != null) {
 				    if(time["Hours"]["StartTime"] < currentTime && time["Hours"]["EndTime"] > currentTime){
-					openDiningHalls[hall["Name"]] = time["Name"];
+					    openDiningHalls.push(hall["Name"]);
 				    }
 				}
 			    });
 			}
 		    });
 		});
-		console.log(openDiningHalls);
-		return openDiningHalls;
+    console.log(openDiningHalls)
+		 callback(openDiningHalls);
 	    }
 	});
     });
