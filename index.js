@@ -17,32 +17,40 @@ var handlers = {
 
   "GetDeserts": function() {
     var protocol = new Protocol("11-11-2016");
-    var diningHall = this.event.request.intent.slots.DiningHall
-    var speechOutput = protocol.getDeserts("Lunch",diningHall);
+    var diningHall = this.event.request.intent.slots.DiningHall.value
     var that = this;
-    setTimeout(function() {
+    protocol.getDeserts("Lunch",diningHall, function(speechOutput) {
       that.emit(':tell', speechOutput);
-    },3000);
+    });
   },
 
   "GetVegetarian": function() {
     var protocol = new Protocol("11-11-2016");
-    var diningHall = this.event.request.intent.slots.DiningHall
-    var speechOutput = protocol.getVegetarian("Lunch",diningHall);
+    var diningHall = this.event.request.intent.slots.DiningHall.value
     var that = this;
-    setTimeout(function() {
+    protocol.getVegetarian("Lunch",diningHall, function(speechOutput) {
       that.emit(':tell', speechOutput);
-    },3000);
+    });
   },
 
   "GetNonVegetarian": function() {
-    var protocol = new Protocol("11-11-2016");
-    var diningHall = this.event.request.intent.slots.DiningHall
-    var speechOutput = protocol.getNonVegetarian("Lunch",diningHall);
+    var protocol = new Protocol("11-10-2016");
+    var diningHall = this.event.request.intent.slots.DiningHall.value
+    console.log(diningHall)
     var that = this;
-    setTimeout(function() {
+    protocol.getNonVegetarian("Lunch", diningHall, function(speechOutput) {
       that.emit(':tell', speechOutput);
-    },3000);
+    });
+  },
+
+  "GetFood": function() {
+    var protocol = new Protocol("11-10-2016");
+    var food = this.event.request.intent.slots.Food.value
+    console.log(food)
+    var that = this;
+    protocol.getFoodOptionsMultiple("Lunch", food, function(speechOutput) {
+      that.emit(':tell', speechOutput);
+    });
   },
 
   "Unhandled": function() {
