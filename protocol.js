@@ -22,11 +22,12 @@ Protocol.prototype.getData = function() {
 }
 
 Protocol.prototype.getOpenDiningHalls = function() {
+  console.log("inside dining halls")
   var openDiningHalls = {}
   var date = new Date();
   var weekday = new Array(7);
   var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-  
+  currentTime = "19:01:00"
   weekday[0]=  "Sunday";
   weekday[1] = "Monday";
   weekday[2] = "Tuesday";
@@ -42,6 +43,9 @@ Protocol.prototype.getOpenDiningHalls = function() {
       'Content-Type': 'application/json'
     },
   }, function (error, response, body) {
+    console.log("Error" + error)
+    console.log("Respones" + response)
+    console.log("Body" + body)
     if (!error && response.statusCode == 200) {
       var json = JSON.parse(body);
       json["Location"].forEach(function(hall) {
