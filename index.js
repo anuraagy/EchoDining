@@ -1,7 +1,6 @@
 var Alexa = require('alexa-sdk');
 var Protocol = require("./protocol");
 var https = require('https');
-var protocol = new Protocol("11-11-2016");
 
 const skillName = "EchoDining";
 
