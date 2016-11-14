@@ -27,7 +27,8 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
     var date = new Date();
     var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-       
+    currentTime = "12:00:00";
+    
     https.get({
 	host: 'api.hfs.purdue.edu',
 	path: '/menus/v2/locations'
@@ -54,9 +55,29 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
 			if(weekday[date.getDay()] == eatingTime["Name"]) {
 			    eatingTime["Meals"].forEach(function(time) {
 				if(time["Hours"] != null) {
+
+				    var date = (time["Hours"]["EndTime"]).split(":");
+
+				    var test = parseInt(date[0]);
+				    var ampm;
+				    
+				    if(test > 12) {
+					ampm = 'PM';
+				    } else {
+					ampm = 'AM';
+				    }
+
+				    if(test == 0) {
+					test = 12;
+				    } else if(test > 12) {
+					test = test - 12
+				    }
+				    
+				    var timeData = test + ':' + date[1] + ' ' + ampm;
+				    
 				    if(time["Hours"]["StartTime"] < currentTime && time["Hours"]["EndTime"] > currentTime){
 					openDiningHalls.push(hall["Name"] + " is open for " + time["Name"]
-							     + " until " + time["Hours"]["EndTime"]);
+							     + " until " + timeData);
 				    }
 				}
 			    });
@@ -68,9 +89,12 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
 
 		for(i = 0; i < openDiningHalls.length; i++) {
 		    if(i == openDiningHalls.length - 1 && i != 0)
-			speechOutput += ', and ' + openDiningHalls[i] + '.';
+			speechOutput += ', and ' + openDiningHalls[i];
 		    else
 			speechOutput += ', ' + openDiningHalls[i];
+
+		    if(i == openDiningHalls.length - 1)
+			speechOutput += '.';
 		}
 
 		if(openDiningHalls.length == 0)
@@ -210,7 +234,7 @@ Protocol.prototype.getFood = function(time, diningHall, foodType, callback) {
 		if(period["Name"] == time) {
 		    period["Stations"].forEach(function(place) {
 			place["Items"].forEach(function(item) {
-			    if(item["Name"].includes(foodType)) {
+			    if((item["Name"].toLowerCase()).includes((foodType.toLowerCase()))) {
 				food.push(item["Name"]);
 			    }
 			});
@@ -244,7 +268,7 @@ Protocol.prototype.convertFoodValue = function(court, availableFood) {
 Protocol.prototype.convertFoodsToSpeech = function(court, foodType, availableFood) {
 
     if(availableFood.length == 0) {
-	return court + ' does not have any ' + foodType + ' options.';
+	return '';//court + ' does not have any ' + foodType + ' options.';
     }
     
     var speechOutput = court + ' ' + foodType + ' options include';
@@ -276,8 +300,15 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	ford = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-	    console.log(foods);
-	    callback(foods);
+            console.log(foods);
+
+	    var speechOutput = '';
+
+	    foods.forEach(function(data) {
+		speechOutput += data + ' ';
+	    });
+
+	    callback(speechOutput);
 	}
     });
     
@@ -288,8 +319,15 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	windsor = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-	    console.log(foods);
-	    callback(foods);
+            console.log(foods);
+
+	    var speechOutput = '';
+
+	    foods.forEach(function(data) {
+		speechOutput += data + ' ';
+	    });
+
+	    callback(speechOutput);
 	}
     });
     
@@ -300,8 +338,15 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	wiley = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-	    console.log(foods);
-	    callback(foods);
+            console.log(foods);
+
+	    var speechOutput = '';
+
+	    foods.forEach(function(data) {
+		speechOutput += data + ' ';
+	    });
+
+	    callback(speechOutput);
 	}
 	
     });
@@ -313,8 +358,15 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	earhart = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-	    console.log(foods);
-	    callback(foods);
+            console.log(foods);
+
+	    var speechOutput = '';
+
+	    foods.forEach(function(data) {
+		speechOutput += data + ' ';
+	    });
+
+	    callback(speechOutput);
 	}
     });
     
@@ -326,7 +378,14 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
 	    console.log(foods);
-	    callback(foods);
+
+	    var speechOutput = '';
+
+	    foods.forEach(function(data) {
+		speechOutput += data + ' ';
+	    });
+	    
+	    callback(speechOutput);
 	}
     });
 }
