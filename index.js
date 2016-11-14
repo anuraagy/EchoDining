@@ -5,57 +5,57 @@ var https = require('https');
 const skillName = "EchoDining";
 
 var handlers = {
-  "GetOpenDiningHalls": function () {
-    var protocol = new Protocol("11-10-2016");
-    var speechOutput = "";
-    console.log("hello")
-    var that = this;
-    protocol.getOpenDiningHalls(function(speechOutput) {
-      that.emit(':tell', speechOutput);
-    });
-  },
-
-  "GetDeserts": function() {
-    var protocol = new Protocol("11-11-2016");
-    var diningHall = this.event.request.intent.slots.DiningHall.value
-    var that = this;
-    protocol.getDeserts("Lunch",diningHall, function(speechOutput) {
-      that.emit(':tell', speechOutput);
-    });
-  },
-
-  "GetVegetarian": function() {
-    var protocol = new Protocol("11-11-2016");
-    var diningHall = this.event.request.intent.slots.DiningHall.value
-    var that = this;
-    protocol.getVegetarian("Lunch",diningHall, function(speechOutput) {
-      that.emit(':tell', speechOutput);
-    });
-  },
-
-  "GetNonVegetarian": function() {
-    var protocol = new Protocol("11-10-2016");
-    var diningHall = this.event.request.intent.slots.DiningHall.value
-    console.log(diningHall)
-    var that = this;
-    protocol.getNonVegetarian("Lunch", diningHall, function(speechOutput) {
-      that.emit(':tell', speechOutput);
-    });
-  },
-
-  "GetFood": function() {
-    var protocol = new Protocol("11-10-2016");
-    var food = this.event.request.intent.slots.Food.value
-    console.log(food)
-    var that = this;
-    protocol.getFoodOptionsMultiple("Lunch", food, function(speechOutput) {
-      that.emit(':tell', speechOutput);
-    });
-  },
-
-  "Unhandled": function() {
-    this.emit(':tell', "I'm sorry, I didn't understand what you said. Please try again!");
-  }
+    "GetOpenDiningHalls": function () {
+	var protocol = new Protocol("11-10-2016");
+	var speechOutput = "";
+	console.log("hello")
+	var that = this;
+	protocol.getOpenDiningHalls(function(speechOutput) {
+	    that.emit(':tell', speechOutput);
+	});
+    },
+    
+    "GetDeserts": function() {
+	var protocol = new Protocol("11-11-2016");
+	var diningHall = this.event.request.intent.slots.DiningHall.value
+	var that = this;
+	protocol.getDeserts("Lunch",diningHall, function(speechOutput) {
+	    that.emit(':tell', speechOutput);
+	});
+    },
+    
+    "GetVegetarian": function() {
+	var protocol = new Protocol("11-11-2016");
+	var diningHall = this.event.request.intent.slots.DiningHall.value
+	var that = this;
+	protocol.getVegetarian("Lunch",diningHall, function(speechOutput) {
+	    that.emit(':tell', speechOutput);
+	});
+    },
+    
+    "GetNonVegetarian": function() {
+	var protocol = new Protocol("11-10-2016");
+	var diningHall = this.event.request.intent.slots.DiningHall.value
+	console.log(diningHall)
+	var that = this;
+	protocol.getNonVegetarian("Lunch", diningHall, function(speechOutput) {
+	    that.emit(':tell', speechOutput);
+	});
+    },
+    
+    "GetFood": function() {
+	var protocol = new Protocol("11-10-2016");
+	var food = this.event.request.intent.slots.Food.value
+	console.log(food)
+	var that = this;
+	protocol.getFoodOptionsMultiple("Lunch", food, function(speechOutput) {
+	    that.emit(':tell', speechOutput);
+	});
+    },
+    
+    "Unhandled": function() {
+	this.emit(':tell', "I'm sorry, I didn't understand what you said. Please try again!");
+    }
 }
 
 exports.handler = function (event, context) {

@@ -1,7 +1,7 @@
 {
   "name": "dininghalls",
   "version": "1.0.0",
-  "description": "",
+  "description": "an alexa application to retrieve dining hall information from purdue",
   "main": "index.js",
   "dependencies": {
     "alexa-app": "^2.3.4",
