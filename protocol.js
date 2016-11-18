@@ -28,7 +28,7 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
     var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
     currentTime = "12:00:00";
-    
+
     https.get({
 	host: 'api.hfs.purdue.edu',
 	path: '/menus/v2/locations'
@@ -271,13 +271,18 @@ Protocol.prototype.convertFoodsToSpeech = function(court, foodType, availableFoo
 	return '';//court + ' does not have any ' + foodType + ' options.';
     }
     
-    var speechOutput = court + ' ' + foodType + ' options include';
-
+    var speechOutput = court + ' offers ';
+    var i;
+    
     for(i = 0; i < availableFood.length; i++) {
 	if(availableFood.length - 1 == i && i != 0)
 	    speechOutput += ', and ' + availableFood[i] + '.';
 	else
 	    speechOutput += ', ' + availableFood[i];
+    }
+
+    if(i == 1) {
+	speechOutput += ".";
     }
 
     return speechOutput;
