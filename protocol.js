@@ -27,7 +27,6 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
     var date = new Date();
     var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    currentTime = "22:00:00";
 
     https.get({
 	host: 'api.hfs.purdue.edu',
