@@ -271,18 +271,16 @@ Protocol.prototype.convertFoodsToSpeech = function(court, foodType, availableFoo
 	return '';//court + ' does not have any ' + foodType + ' options.';
     }
     
-    var speechOutput = court + ' offers ';
+    var speechOutput = court + ' offers';
     var i;
     
     for(i = 0; i < availableFood.length; i++) {
 	if(availableFood.length - 1 == i && i != 0)
 	    speechOutput += ', and ' + availableFood[i] + '.';
+	else if(availableFood.length - 1 == i && i == 0)
+	    speechOutput += ' ' + availableFood[i] + '.';
 	else
 	    speechOutput += ', ' + availableFood[i];
-    }
-
-    if(i == 1) {
-	speechOutput += ".";
     }
 
     return speechOutput;
