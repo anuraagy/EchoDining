@@ -277,10 +277,13 @@ Protocol.prototype.getFood = function(time, diningHall, foodType, callback) {
     });
 }
 
-Protocol.prototype.getFoodOptions = function(time, court, foodType) {
+Protocol.prototype.getFoodOptions = function(time, court, foodType, callback) {
     
     this.getFood(time, court, foodType, function(availableFood) {
-	console.log(availableFood);
+
+	var speechOutput = Protocol.prototype.convertFoodsToSpeech(court, foodType, availableFood);
+	console.log(speechOutput);
+	callback(speechOutput);
     });
 }
 
@@ -308,7 +311,7 @@ Protocol.prototype.convertFoodsToSpeech = function(court, foodType, availableFoo
 	else if(availableFood.length - 1 == i && i == 0)
 	    speechOutput += ' ' + availableFood[i] + '.';
 	else
-	    speechOutput += ', ' + availableFood[i];
+	    speechOutput += (i == 0 ? ' ' : ', ') + availableFood[i];
     }
 
     return speechOutput;
@@ -331,15 +334,7 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	ford = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-            console.log(foods);
-
-	    var speechOutput = '';
-
-	    foods.forEach(function(data) {
-		speechOutput += data + ' ';
-	    });
-
-	    callback(speechOutput);
+            callback(Protocol.prototype.multGen(foods));
 	}
     });
     
@@ -350,15 +345,7 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	windsor = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-            console.log(foods);
-
-	    var speechOutput = '';
-
-	    foods.forEach(function(data) {
-		speechOutput += data + ' ';
-	    });
-
-	    callback(speechOutput);
+	    callback(Protocol.prototype.multGen(foods));
 	}
     });
     
@@ -369,15 +356,7 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	wiley = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-            console.log(foods);
-
-	    var speechOutput = '';
-
-	    foods.forEach(function(data) {
-		speechOutput += data + ' ';
-	    });
-
-	    callback(speechOutput);
+            callback(Protocol.prototype.multGen(foods));
 	}
 	
     });
@@ -389,15 +368,7 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	earhart = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-            console.log(foods);
-
-	    var speechOutput = '';
-
-	    foods.forEach(function(data) {
-		speechOutput += data + ' ';
-	    });
-
-	    callback(speechOutput);
+            callback(Protocol.prototype.multGen(foods));
 	}
     });
     
@@ -408,15 +379,18 @@ Protocol.prototype.getFoodOptionsMultiple = function(time, foodType, callback) {
 	hillenbrand = true;
 	
 	if(hillenbrand && earhart && wiley && windsor && ford) {
-	    console.log(foods);
-
-	    var speechOutput = '';
-
-	    foods.forEach(function(data) {
-		speechOutput += data + ' ';
-	    });
-	    
-	    callback(speechOutput);
+	    callback(Protocol.prototype.multGen(foods));
 	}
     });
+}
+
+Protocol.prototype.multGen = function(foods) {
+
+    var speechOutput = '';
+    
+    foods.forEach(function(data) {
+	speechOutput += data + ' ';
+    });
+    
+    return speechOutput;
 }

@@ -8,3 +8,8 @@ protocol.getFoodOptionsMultiple("Lunch", "Chicken", function(speechOutput) {
 protocol.getOpenDiningHalls(function(data) {
 
 });
+
+
+protocol.getFoodOptions("Lunch", "Wiley", "Chicken", function(speechOutput) {
+
+});
