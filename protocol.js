@@ -27,7 +27,7 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
     var date = new Date();
     var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    currentTime = "12:00:00";
+    currentTime = "22:00:00";
 
     https.get({
 	host: 'api.hfs.purdue.edu',
@@ -76,8 +76,7 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
 				    var timeData = test + ':' + date[1] + ' ' + ampm;
 				    
 				    if(time["Hours"]["StartTime"] < currentTime && time["Hours"]["EndTime"] > currentTime){
-					openDiningHalls.push(hall["Name"] + " is open for " + time["Name"]
-							     + " until " + timeData);
+					openDiningHalls.push([hall["Name"], time["Name"], timeData]);
 				    }
 				}
 			    });
@@ -87,19 +86,48 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
 
 		var speechOutput = 'Currently';
 
-		for(i = 0; i < openDiningHalls.length; i++) {
-		    if(i == openDiningHalls.length - 1 && i != 0)
-			speechOutput += ', and ' + openDiningHalls[i];
-		    else
-			speechOutput += ', ' + openDiningHalls[i];
+		if(openDiningHalls.length != 0) {
+		    var finalDiningHalls = [openDiningHalls[0]];
+		    finalDiningHalls[0].push(0);
+		    
+		    for(i = 1; i < openDiningHalls.length; i++) {
+			var data = openDiningHalls[i];
+			data.push(0);
+			
+			var successful = false;
+			
+			for(j = 0; j < finalDiningHalls.length; j++) {
 
-		    if(i == openDiningHalls.length - 1)
-			speechOutput += '.';
-		}
+			    var finalData = finalDiningHalls[j];
+			    
+			    if(successful = (data[1] == finalData[1] && data[2] == finalData[2])) {
+				finalDiningHalls[j][0] += ', ' + data[0];
+				finalDiningHalls[j][3]++;
+				break;
+			    }
+			}
 
-		if(openDiningHalls.length == 0)
+			if(!successful) {
+			    finalDiningHalls.push(data);
+			}
+		    }
+
+		    finalDiningHalls.forEach(function(data) {
+			speechOutput += ' ' + data[0];
+
+			if(data[3] != 0) {
+			    speechOutput += ' are open for ';
+			} else {
+			    speechOutput += ' is open for ';
+			}
+
+			speechOutput += data[1] + ' until ' + data[2] + '.';
+		    });
+		    
+		} else {
 		    speechOutput += ' no dining halls are open.';
-		
+		}
+				
 		console.log(speechOutput);
 		callback(speechOutput);
 	    }
