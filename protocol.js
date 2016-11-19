@@ -6,6 +6,7 @@ var request = require('request')
 function Protocol(date, diningHall) {
   var date = new Date();
   this.date = (date.getMonth() + 1) + "-" + date.getDate() + "-" + date.getFullYear();
+  console.log(this.date)
 }
 
 Protocol.prototype.getData = function() {
@@ -27,8 +28,8 @@ Protocol.prototype.getOpenDiningHalls = function(callback) {
   var openDiningHalls = [];
   var date = new Date();
   var weekday = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-  var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-
+  var currentTime = (date.getHours() - 5) + ":" + date.getMinutes() + ":" + date.getSeconds();
+  console.log(currentTime);
   https.get({
     host: 'api.hfs.purdue.edu',
     path: '/menus/v2/locations'
@@ -111,7 +112,7 @@ Protocol.prototype.getDeserts = function(time, diningHall, callback) {
 
   var deserts = [];
   var date = new Date();
-  var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  var currentTime = (date.getHours() - 5) + ":" + date.getMinutes() + ":" + date.getSeconds();
 
   request({
     uri:  'https://api.hfs.purdue.edu/menus/v2/locations/'+ diningHall + "/" + this.date,
@@ -151,7 +152,7 @@ Protocol.prototype.getVegetarian = function(time, diningHall, callback) {
 
   var food = [];
   var date = new Date();
-  var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  var currentTime = (date.getHours() - 5) + ":" + date.getMinutes() + ":" + date.getSeconds();
 
   request({
     uri:  'https://api.hfs.purdue.edu/menus/v2/locations/'+ diningHall + "/" + this.date,
@@ -187,7 +188,7 @@ Protocol.prototype.getNonVegetarian = function(time, diningHall, callback) {
 
   var food = [];
   var date = new Date();
-  var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  var currentTime = (date.getHours() - 5) + ":" + date.getMinutes() + ":" + date.getSeconds();
 
   request({
     uri:  'https://api.hfs.purdue.edu/menus/v2/locations/'+ diningHall + "/" + this.date,
@@ -223,7 +224,7 @@ Protocol.prototype.getFood = function(time, diningHall, foodType, callback) {
 
   var food = [];
   var date = new Date();
-  var currentTime = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+  var currentTime = (date.getHours() - 5) + ":" + date.getMinutes() + ":" + date.getSeconds();
 
   request({
     uri:  'https://api.hfs.purdue.edu/menus/v2/locations/'+ diningHall + "/" + this.date,

@@ -8,3 +8,7 @@ protocol.getFoodOptionsMultiple("Lunch", "Chicken", function(speechOutput) {
 protocol.getOpenDiningHalls(function(data) {
 
 });
+
+protocol.getNonVegetarian("brian", "Wiley", function(data) {
+  console.log(data)
+});
